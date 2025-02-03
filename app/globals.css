@@ -83,6 +83,14 @@
 }
 /* =============================== */
 
+/* .custom-toaster {
+  position: fixed; 
+  top: 20px;    
+  left: 50%;     
+  transform: translateX(-50%); 
+  z-index: 100;   
+} */
+
 @layer utilities {
   .flex-center {
     @apply flex justify-center items-center;
