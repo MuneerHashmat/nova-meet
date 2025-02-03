@@ -3,10 +3,8 @@ import React, { ReactNode } from "react";
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
@@ -37,7 +35,10 @@ const MeetingModal = ({
 }: MeetingModalProps) => {
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="flex w-full max-w-[520px] flex-col gap-6 border-none bg-dark-1 px-6 py-9 text-white">
+      <DialogHeader>
+        <DialogTitle></DialogTitle>
+      </DialogHeader>
+      <DialogContent className="flex w-[95%] max-w-[520px] flex-col gap-6 border-none bg-dark-1 px-6 py-9 text-white">
         <div className="flex flex-col gap-6">
           {image && (
             <div className="flex justify-center">
