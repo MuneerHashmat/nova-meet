@@ -18,7 +18,7 @@ const CallList = ({ type }: { type: category }) => {
     useGetCalls();
   const router = useRouter();
   const [recordings, setRecordings] = useState<CallRecording[]>([]);
-  const {toast}=useToast();
+  const { toast } = useToast();
 
   const getCalls = () => {
     switch (type) {
@@ -54,21 +54,21 @@ const CallList = ({ type }: { type: category }) => {
 
   useEffect(() => {
     const fetchRecordings = async () => {
-     try {
-      const callData = await Promise.all(
-        callRecordings.map((meeting) => {
-          return meeting.queryRecordings();
-        })
-      );
-      const recordings = callData
-        .filter((call) => call.recordings.length > 0)
-        .flatMap((call) => call.recordings);
-      setRecordings(recordings);
-     } catch (error) {
-      console.log(error);
-      
-      toast({title:"Try again later"})
-     }
+      try {
+        const callData = await Promise.all(
+          callRecordings.map((meeting) => {
+            return meeting.queryRecordings();
+          })
+        );
+        const recordings = callData
+          .filter((call) => call.recordings.length > 0)
+          .flatMap((call) => call.recordings);
+        setRecordings(recordings);
+      } catch (error) {
+        console.log(error);
+
+        toast({ title: "Try again later" });
+      }
     };
 
     if (type === "recordings") {
@@ -94,7 +94,11 @@ const CallList = ({ type }: { type: category }) => {
                 ? "/icons/upcoming.svg"
                 : "/icons/recordings.svg"
             }
-            title={meeting.state?.custom.description ||meeting.filename || "No description"}
+            title={
+              meeting?.state?.custom?.description?.substring(0, 26) ||
+              meeting?.filename?.substring(0, 20) ||
+              "Personal Meeting"
+            }
             date={
               meeting.state?.startsAt.toLocaleString() ||
               meeting.start_time.toLocaleString()
