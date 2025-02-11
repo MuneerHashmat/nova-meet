@@ -8,6 +8,7 @@ import {
   CallStatsButton,
   PaginatedGridLayout,
   SpeakerLayout,
+  useCall,
   useCallStateHooks,
 } from "@stream-io/video-react-sdk";
 import {
@@ -29,6 +30,7 @@ type CallLayoutType = "grid" | "speaker-left" | "speaker-right";
 const MeetingRoom = () => {
   const searchParams = useSearchParams();
   const router = useRouter();
+  const call = useCall();
   const isPersonalRoom = !!searchParams.get("personal");
   const [layout, setLayout] = useState<CallLayoutType>("speaker-left");
   const [showParticipants, setShowParticipants] = useState(false);
@@ -65,7 +67,15 @@ const MeetingRoom = () => {
         </div>
       </div>
       <div className="fixed bottom-0 flex w-full items-center justify-center py-5 sm:py-1 gap-5 flex-wrap">
-        <CallControls onLeave={() => router.push("/")} />
+        <CallControls
+          onLeave={() => {
+            if (call) {
+              call.camera.disable();
+              call.microphone.disable();
+            }
+            router.push("/");
+          }}
+        />
         <DropdownMenu>
           <div className="flex items-center">
             <DropdownMenuTrigger className="cursor-pointer rounded-2xl bg-[#19232d] px-4 py-2 hover:bg-[#4c535b]">

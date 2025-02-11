@@ -10,7 +10,7 @@ import { useParams } from "next/navigation";
 import { useState } from "react";
 
 const Meeting = () => {
-  const { user, isLoaded } = useUser();
+  const { isLoaded } = useUser();
   const [isSetupComplete, setIsSetupComplete] = useState<boolean>(false);
 
   const { id } = useParams<{ id: string | string[] }>();

@@ -74,7 +74,7 @@ const CallList = ({ type }: { type: category }) => {
     if (type === "recordings") {
       fetchRecordings();
     }
-  }, [type, callRecordings]);
+  }, [type, callRecordings,toast]);
 
   const calls = getCalls();
   const noCallsMessage = getNoCallsMessage();
