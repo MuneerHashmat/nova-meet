@@ -7,13 +7,16 @@ import {
 } from "@stream-io/video-react-sdk";
 import { useEffect, useState } from "react";
 import { Button } from "./ui/button";
+import { Video, VideoOff, Mic, MicOff } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 const MeetingSetup = ({
   setIsSetupComplete,
 }: {
   setIsSetupComplete: (value: boolean) => void;
 }) => {
-  const [isMicCamToggledOn, setIsMikeCamToggledOn] = useState(false);
+  const [isMicToggledOn, setIsMikeToggledOn] = useState(false);
+  const [isCamToggledOn, setIsCamToggledOn] = useState(false);
   const call = useCall();
 
   if (!call) {
@@ -25,14 +28,21 @@ const MeetingSetup = ({
     setIsSetupComplete(true);
   };
   useEffect(() => {
-    if (isMicCamToggledOn) {
-      call?.camera.disable();
-      call?.microphone.disable();
-    } else {
-      call?.camera.enable();
+    if (isMicToggledOn) {
       call?.microphone.enable();
+    } else {
+      call?.microphone.disable();
     }
-  }, [isMicCamToggledOn, call?.camera, call?.microphone]);
+  }, [isMicToggledOn, call?.microphone]);
+
+  useEffect(() => {
+    if (isCamToggledOn) {
+      call?.camera.enable();
+    } else {
+      call?.camera.disable();
+    }
+  }, [isCamToggledOn, call?.camera]);
+
   return (
     <div className="flex h-screen w-full flex-col justify-center items-center gap-3 text-white">
       <h1 className="text-2xl font-bold">Setup</h1>
@@ -40,14 +50,24 @@ const MeetingSetup = ({
       <VideoPreview className="w-[90vw] sm:w-auto" />
 
       <div className="flex h-16 items-center justify-center gap-3">
-        <label className="flex items-center justify-center gap-2 font-medium">
-          <input
-            type="checkbox"
-            checked={isMicCamToggledOn}
-            onChange={(e) => setIsMikeCamToggledOn(e.target.checked)}
-          />
-          Join with mic and camera off
-        </label>
+        <button
+          onClick={() => setIsMikeToggledOn((prev) => !prev)}
+          className={cn(
+            "cursor-pointer rounded-2xl te bg-[#19232d] px-4 py-2",
+            !isMicToggledOn && "bg-red-500"
+          )}
+        >
+          {isMicToggledOn ? <Mic /> : <MicOff />}
+        </button>
+        <button
+          onClick={() => setIsCamToggledOn((prev) => !prev)}
+          className={cn(
+            "cursor-pointer rounded-2xl bg-[#19232d] px-4 py-2",
+            !isCamToggledOn && "bg-red-500"
+          )}
+        >
+          {isCamToggledOn ? <Video /> : <VideoOff />}
+        </button>
         <DeviceSettings />
       </div>
       <Button

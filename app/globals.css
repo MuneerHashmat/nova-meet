@@ -89,6 +89,10 @@
 .cl-navbarButton {
   color: white;
 }
+
+.cl-userButtonPopoverFooter,.cl-internal-1dauvpw{
+  display: none;
+}
 /* =============================== */
 
 /* .custom-toaster {
