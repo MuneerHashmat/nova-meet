@@ -73,7 +73,7 @@ const MeetingTypeList = () => {
   const filterTime = (time: Date) => {
     const currentTime = new Date();
     const selectedTime = new Date(time);
-    return selectedTime.getTime() >= currentTime.getTime(); // Compare milliseconds
+    return selectedTime.getTime() >= currentTime.getTime(); 
   };
   return (
     <section className="grid grid-cols-1 gap-3 md:grid-cols-2 xl:grid-cols-4">
@@ -139,7 +139,6 @@ const MeetingTypeList = () => {
               minDate={new Date()}
               filterTime={filterTime}
               className="w-full rounded bg-dark-3 p-2 focus:outline-none"
-
             />
           </div>
         </MeetingModal>
